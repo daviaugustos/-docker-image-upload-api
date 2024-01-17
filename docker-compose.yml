@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    command: ["/wait-for-it.sh", "db:5432", "--", "node", "index.js"]
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: meu_usuario
+      POSTGRES_PASSWORD: minha_senha
+      POSTGRES_DB: meu_banco_de_dados
+    ports:
+      - "5432:5432"
